@@ -15,10 +15,4 @@ const Login = () => {
   );
 };
 
-export const getServerSideProps = async (context) => {
-  return {
-    props: {},
-  };
-};
-
 export default Login;
