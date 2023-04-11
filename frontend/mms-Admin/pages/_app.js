@@ -1,14 +1,20 @@
 import Head from "next/head";
+import AppLayout from "../lib/components/Layout/Layout";
 
 import "../styles/globals.css";
+import "antd/dist/reset.css";
+import "../lib/components/Layout/Header/Header.css";
+import "../lib/components/Layout/SideBar/SideBar.css";
 
 const App = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <style>{`body { background-color: #f9f9f9b8 !important; }`}</style>
+        <title>Welcome</title>
       </Head>
-      <Component {...pageProps} />
+      <AppLayout>
+        <Component {...pageProps} />
+      </AppLayout>
     </>
   );
 };
