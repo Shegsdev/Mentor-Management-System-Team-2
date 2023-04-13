@@ -1,12 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap");
 
 :root {
-  --primary: #058B94;
-  --primary_light: #F7FEFF;
+  --primary: #058b94;
+  --primary_light: #f7feff;
   --text_light: #808080;
   --text_dark: #141414;
-  --text_default: #333333;
+  --text_default: #333;
 }
+
 html,
 body {
   padding: 0;
@@ -27,10 +28,12 @@ body {
 .ant-menu-item {
   border-radius: 0 !important;
 }
+
 .ant-menu-item:not(.ant-menu-item-selected):hover {
   background-color: inherit !important;
 }
+
 .ant-menu-item-selected {
   color: var(--text_light) !important;
-  background-color: #FFF !important;
+  background-color: #fff !important;
 }
