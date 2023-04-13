@@ -1,3 +1,27 @@
 :root {
-  --primary: #299f9e;
+  --primary: #058B94;
+  --primary_light: #F7FEFF;
+  --text_light: #808080;
+  --text_dark: #141414;
+  --text_default: #333333;
+}
+
+* {
+  font-size: 16px;
+}
+
+.logo-text {
+  color: #fff;
+  font-weight: 600;
+}
+
+.ant-menu-item {
+  border-radius: 0 !important;
+}
+.ant-menu-item:not(.ant-menu-item-selected):hover {
+  background-color: inherit !important;
+}
+.ant-menu-item-selected {
+  color: var(--text_light) !important;
+  background-color: #FFF !important;
 }
