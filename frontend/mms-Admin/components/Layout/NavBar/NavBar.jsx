@@ -41,9 +41,11 @@ const NavBar = () => {
             </Col>
             <Col className="gutter-row">
               <Link href="/home">
-                <Badge>
-                  <Icon name="Chat" />
-                </Badge>
+                <a>
+                  <Badge>
+                    <Icon name="Chat" />
+                  </Badge>
+                </a>
               </Link>
             </Col>
             <Col className="gutter-row">
