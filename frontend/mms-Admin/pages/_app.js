@@ -8,6 +8,7 @@ import "components/Layout/Layout.css";
 import "components/NavHeader/NavHeader.css";
 import "components/Layout/NavBar/NavBar.css";
 import "components/Layout/SideBar/SideBar.css";
+import { styles } from "styles/_app";
 
 const App = ({ Component, pageProps }) => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const App = ({ Component, pageProps }) => {
     <>
       <Head>
         <title>MMS - Mentor&apos;s Managers System</title>
+        <style>{ styles }</style>
       </Head>
       <WithAuth component={<Component {...pageProps} />} route={router?.route} />
     </>

@@ -13,7 +13,7 @@ const AppLayout = ({ children }) => {
   useEffect(() => {
     const pathname = router?.pathname.slice(1);
     setHeaderTitle(pathname);
-  }, []);
+  }, [router]);
 
   return (
     <Layout className="app-layout">

@@ -36,16 +36,3 @@ body {
   color: #fff;
   font-weight: 600;
 }
-
-.ant-menu-item {
-  border-radius: 0 !important;
-}
-
-.ant-menu-item:not(.ant-menu-item-selected):hover {
-  background-color: inherit !important;
-}
-
-.ant-menu-item-selected {
-  color: var(--text_light) !important;
-  background-color: #fff !important;
-}
