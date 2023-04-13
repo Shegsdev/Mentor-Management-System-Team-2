@@ -22,7 +22,7 @@ const NavBar = () => {
             <Image
               width={80}
               height={80}
-              src={"/assets/images/logo.png"}
+              src={"/assets/images/logo_small.png"}
               alt="logo"
             />
             <span className="logo-text">Mentor&apos;s Managers System</span>

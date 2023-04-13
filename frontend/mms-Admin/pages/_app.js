@@ -1,5 +1,6 @@
 import Head from "next/head";
-import AppLayout from "components/Layout/Layout";
+import { useRouter } from "next/router";
+import WithAuth from "components/WithAuth";
 
 import "antd/dist/reset.css";
 import "styles/globals.css";
@@ -9,14 +10,13 @@ import "components/Layout/NavBar/NavBar.css";
 import "components/Layout/SideBar/SideBar.css";
 
 const App = ({ Component, pageProps }) => {
+  const router = useRouter();
   return (
     <>
       <Head>
         <title>MMS - Mentor&apos;s Managers System</title>
       </Head>
-      <AppLayout>
-        <Component {...pageProps} />
-      </AppLayout>
+      <WithAuth component={<Component {...pageProps} />} route={router?.route} />
     </>
   );
 };
