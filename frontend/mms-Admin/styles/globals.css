@@ -1,18 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap");
 
-:root {
-  --primary: #058b94;
-  --primary_light: #f7feff;
-  --text_light: #808080;
-  --text_dark: #141414;
-  --text_default: #333;
-}
-
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: 'Dancing Script', cursive;
+}
+
+.theme-primary {
+  color: #058b94;
+}
+
+.theme-light {
+  color: #f7feff;
+}
+
+.text-light {
+  color: #808080;
+}
+
+.text-dark {
+  color: #141414;
+}
+
+.text-default {
+  color: #333;
 }
 
 * {

@@ -16,10 +16,10 @@ const AppLayout = ({ children }) => {
   }, []);
 
   return (
-    <Layout>
+    <Layout className="app-layout">
       <NavBar />
       <Content>
-        <Layout style={{ background: "#fff" }}>
+        <Layout className="app-layout">
           <SideBar />
           <Content className="app-layout-content">
             <NavHeader title={headerTitle} />

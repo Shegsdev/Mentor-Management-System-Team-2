@@ -1,25 +1,8 @@
-.sidebar-layout {
-  background: var(--primary_light) !important;
-}
-
 .sidebar-link {
-  color: var(--text_light);
   margin-left: 22px;
-}
-
-.active {
-  font-weight: 600 !important;
 }
 
 .sidebar-menu {
   height: 80vh;
   padding-top: 30px;
-  background: none !important;
-  border: none !important;
-}
-
-.sidebar-menu-item {
-  padding-left: 55px !important;
-  margin: 0 !important;
-  width: 100% !important;
 }
