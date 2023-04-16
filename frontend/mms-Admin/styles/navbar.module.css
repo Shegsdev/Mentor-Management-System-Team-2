@@ -18,7 +18,7 @@
   align-items: center;
 }
 
-.navbar_right, .navbar_icons {
+.navbar_right,.navbar_icons {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -39,10 +39,6 @@
   font-weight: 600;
 }
 
-@media (max-width: 480px) {
-  
-}
-
 @media (max-width: 576px) {
   .header {
     padding: 10px;
@@ -51,10 +47,6 @@
   .logo_text {
     display: none;
   }
-}
-
-@media (max-width: 768px) {
-  
 }
 
 @media (max-width: 1080px) {

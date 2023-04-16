@@ -9,7 +9,7 @@
 
 @media (max-width: 992px) {
   .ant-layout-sider {
-    position: absolute !important;
+    position: absolute;
     left: 0;
     z-index: 99;
   }
