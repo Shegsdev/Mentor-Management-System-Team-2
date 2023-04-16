@@ -5,7 +5,7 @@ import SideBar from "./SideBar/SideBar";
 import NavHeader from "components/NavHeader/NavHeader";
 import { Layout } from "antd";
 
-import {extractTitleFromUrl} from "utils/extractTitleFromUrl";
+import { extractTitleFromUrl } from "utils/extractTitleFromUrl";
 
 import styles from "styles/layout.module.css";
 

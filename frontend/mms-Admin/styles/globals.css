@@ -31,3 +31,8 @@ body {
   font-size: 16px;
   font-family: 'Mukta', sans-serif;
 }
+
+.logo-text {
+  color: #fff;
+  font-weight: 600;
+}
