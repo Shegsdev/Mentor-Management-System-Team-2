@@ -48,7 +48,7 @@ const Dashboard = () => {
           <div className={styles.top_cards}>
             {
               stats.map((stat) => (
-                <div className={styles.card}>
+                <div className={styles.card} key={stat.title}>
                   <Paragraph style={{ margin: 0 }}>
                     <p style={{ margin: 0, fontSize: "20px" }}>{stat.title}</p>
                     <p style={{ margin: 0, fontSize: "20px" }}>{stat.value}</p>
