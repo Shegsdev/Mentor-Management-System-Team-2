@@ -25,7 +25,7 @@
 }
 
 .cardcontainer::-webkit-scrollbar-thumb {
-  background: transparent; 
+  background: transparent;
   border-radius: 10px;
 }
 

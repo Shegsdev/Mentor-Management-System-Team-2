@@ -18,7 +18,8 @@
   align-items: center;
 }
 
-.navbar_right,.navbar_icons {
+.navbar_right,
+.navbar_icons {
   display: flex;
   justify-content: space-between;
   align-items: center;
