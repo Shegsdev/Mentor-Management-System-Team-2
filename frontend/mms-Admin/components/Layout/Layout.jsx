@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import NavBar from "./NavBar/NavBar";
 import SideBar from "./SideBar/SideBar";
-import NavHeader from "components/NavHeader/NavHeader";
-import { Layout } from "antd";
+import NavHeader from "../NavHeader/NavHeader";
+import { Layout, Input } from "antd";
+import { extractTitleFromUrl } from "utils/extractTitleFromUrl"
+import styles from "../componentStyles/login.module.css";
+import Pagination from "../Pagination"
 
 import { extractTitleFromUrl } from "utils/extractTitleFromUrl";
 
@@ -13,6 +16,7 @@ const AppLayout = ({ children }) => {
   const [headerTitle, setHeaderTitle] = useState("");
   const router = useRouter();
   const { Content } = Layout;
+  const searchData = { foo: 'bar' }
 
   useEffect(() => {
     let pathname = router?.pathname
@@ -26,8 +30,23 @@ const AppLayout = ({ children }) => {
       <Content>
         <Layout className={styles.app_layout}>
           <SideBar />
-          <Content className={styles.app_layout_content}>
+          <Content className="app-layout-content">
+            <div className={[styles.div_input]}>
             <NavHeader title={headerTitle} />
+            {router?.pathname === "/settings/archive" && (
+              <>
+               <Input
+                  className={[styles.archive_input]}
+                  size="large"
+                  placeholder="Search Archive"
+                  type="archive"
+                  required 
+                />
+               <Pagination total={20} />
+              </>
+            )}
+
+            </div>
             {children}
           </Content>
         </Layout>

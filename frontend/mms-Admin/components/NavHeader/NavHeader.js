@@ -1,6 +1,6 @@
-import { capitalize } from "utils/capitalize";
-
+import { capitalize } from "../../utils/capitalize";
 import styles from "styles/navheader.module.css";
+
 
 const NavHeader = ({ title, children }) => {
   return (
