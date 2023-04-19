@@ -1,9 +1,15 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
 .stats {
   display: grid;
   grid-template-columns: 20% auto;
 }
 
-.card {
+.stats_card {
   background: #e6fdfe;
   border-radius: 7px;
   padding: 14px;
@@ -12,6 +18,16 @@
   width: 230px;
 }
 
+.card {
+  background: #e6fdfe;
+  border-radius: 7px;
+  padding: 14px;
+}
+
+.card_header_text {
+  font-size: 18px;
+  font-weight: 600;
+}
 .top_cards {
   display: flex;
   justify-content: space-between;
@@ -42,8 +58,8 @@
   border-radius: 7px;
   padding: 12px;
   overflow: scroll;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 @media (max-width: 1080px) {
