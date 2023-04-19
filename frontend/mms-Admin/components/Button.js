@@ -1,5 +1,16 @@
-import styles from "styles/button.module.css";
-
 export const Button = ({ type="default", htmlType="button", children }) => (
-  <button className={[type === "primary" ? styles.button_primary : styles.button_default]} type={htmlType}>{children}</button>
+  <button
+    type={htmlType}
+    style={{
+      border: 0,
+      borderRadius: "5px",
+      background: type === "primary" ? "#058b94" : "#f7feff",
+      color: type === "primary" ? "#f7feff" : "#058b94",
+      cursor: "pointer",
+      fontSize: "12px",
+      padding: "6px 15px",
+    }}
+  >
+    {children}
+  </button>
 );
