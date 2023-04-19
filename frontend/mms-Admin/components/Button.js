@@ -9,8 +9,7 @@ export const Button = ({ type="default", htmlType="button", children }) => (
       cursor: "pointer",
       fontSize: "12px",
       padding: "6px 15px",
-    }}
-  >
+    }}>
     {children}
   </button>
 );
