@@ -3,7 +3,7 @@
   font-size: 32px;
   color: #141414;
   line-height: 53.18px;
-  padding-top: 100px;
+  margin-top: 100px;
   height: 53px;
   margin-bottom: 0;
 }
@@ -22,6 +22,18 @@
   font-size: 20px;
   width: 90%;
   height: 50px;
+}
+
+.archive_input {
+  font-size: 16px;
+  width: 90%;
+  height: 40px;
+  margin-right: 2rem;
+  border-radius: 5px;
+}
+
+.div_input {
+  display: flex;
 }
 
 .login_input_margin {
@@ -47,7 +59,7 @@
   height: 50px;
   flex-direction: row;
   flex: 1;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding-top: 10px;
   padding-bottom: 10px;
