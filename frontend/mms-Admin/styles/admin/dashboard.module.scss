@@ -48,6 +48,10 @@
     display: grid;
     grid-template-columns: 20% auto;
 
+    @media (max-width: 1080px) {
+      display: block;
+    }
+
     .active_program_card {
       background: $theme-primary;
       border-radius: 7px;
@@ -104,6 +108,12 @@
 .top_cards {
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 1550px) {
+    display: grid;
+    grid-template-columns: 230px 230px 230px 230px;
+    gap: 2em;
+  }
 }
 
 .card_container::-webkit-scrollbar {
@@ -133,18 +143,4 @@
   overflow: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-}
-
-@media (max-width: 1080px) {
-  .stats {
-    display: block;
-  }
-}
-
-@media (max-width: 1550px) {
-  .top_cards {
-    display: grid;
-    grid-template-columns: 230px 230px 230px 230px;
-    gap: 2em;
-  }
 }
