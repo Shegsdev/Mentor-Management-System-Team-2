@@ -15,7 +15,7 @@ const SideBar = ({ user }) => {
   return (
     <Sider
       className={styles.sidebar_layout}
-      style={{ background: variables.themeLight }}
+      style={{ background: variables.themelight }}
       width={250}
       breakpoint="lg"
       collapsedWidth="0"

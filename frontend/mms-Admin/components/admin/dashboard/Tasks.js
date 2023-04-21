@@ -10,7 +10,7 @@ const Tasks = ({ tasks }) => {
     <div className={styles.card_container}>
       <Row justify={"space-between"}>
           <Paragraph>
-            <p style={{ margin: 0 }} className={styles.card_header_text}>Tasks overview</p>
+            <p className={styles.card_header_text}>Tasks overview</p>
           </Paragraph>
       </Row>
       <Row gutter={[16, 16]}>
@@ -27,7 +27,7 @@ const Tasks = ({ tasks }) => {
             return (
               <Col md={8} sm={12} xs={24}>
                 <div className={styles.card}>
-                  <Icon name="Report" width={25} height={33} color={variables.themePrimary} />
+                  <Icon name="Report" width={25} height={33} color={variables.themeprimary} />
                   <Paragraph className={styles.paragraph}>
                     <p>{task.title}</p>
                     <small>

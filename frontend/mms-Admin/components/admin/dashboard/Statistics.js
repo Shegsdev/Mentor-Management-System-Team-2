@@ -31,7 +31,7 @@ const Statistics = ({ stats }) => {
               </Paragraph>
               <Icon
                 name={`${stat.icon}`}
-                color={variables.themePrimary}
+                color={variables.themeprimary}
                 width="32"
                 height="32"
               />

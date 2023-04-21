@@ -1,5 +1,25 @@
 @import "../variables.module.scss";
 
+.card {
+  background: #e6fdfe;
+  border-radius: $primary-radius;
+  padding: 14px;
+
+  p {
+    margin: 0;
+  }
+
+  .paragraph {
+    margin-left: 1em;
+    display: inline-block;
+
+    p {
+      margin: 0;
+      font-size: 20px;
+    }
+  }
+}
+
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -7,6 +27,21 @@
 
   .space {
     margin-top: 1em;
+  }
+
+  .task_status_card {
+    background: $theme-primary;
+    border-radius: $primary-radius;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      font-size: 20px;
+      color: $theme-light;
+      margin: 0;
+    }
   }
 
   .stats {
@@ -49,21 +84,6 @@
       }
     }
   }
-
-  .task_status_card {
-    background: $theme-primary;
-    border-radius: $primary-radius;
-    padding: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    p {
-      font-size: 20px;
-      color: $theme-light;
-      margin: 0;
-    }
-  }
 }
 
 .stats_card {
@@ -75,31 +95,12 @@
   width: 230px;
 }
 
-.card {
-  background: #e6fdfe;
-  border-radius: $primary-radius;
-  padding: 14px;
-
-  p {
-    margin: 0;
-  }
-
-  .paragraph {
-    margin-left: 1em;
-    display: inline-block;
-
-    p {
-      margin: 0;
-      font-size: 20px;
-    }
-  }
-}
-
 .card_header_text {
   font-size: 18px;
   font-weight: 600;
   margin: 0;
 }
+
 .top_cards {
   display: flex;
   justify-content: space-between;
