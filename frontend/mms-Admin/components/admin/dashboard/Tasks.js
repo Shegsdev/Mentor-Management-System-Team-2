@@ -25,7 +25,7 @@ const Tasks = ({ tasks }) => {
           <Row gutter={[16, 16]}>
           {tasks?.map((task) => {
             return (
-              <Col md={8} sm={12} xs={24}>
+              <Col md={8} sm={12} xs={24} key={task.title}>
                 <div className={styles.card}>
                   <Icon name="Report" width={25} height={33} color={variables.themeprimary} />
                   <Paragraph className={styles.paragraph}>

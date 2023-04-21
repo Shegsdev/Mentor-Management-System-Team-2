@@ -18,7 +18,7 @@ const Reports = ({ reports }) => {
       <Row justify={"space-between"} gutter={[16, 16]}>
         {reports?.map((report) => {
           return (
-            <Col md={8} sm={12} xs={24}>
+            <Col md={8} sm={12} xs={24} key={report.title}>
               <div className={styles.card}>
                 <Icon name="Report" width={25} height={33} color="#058B94" />
                 <Paragraph className={styles.paragraph}>

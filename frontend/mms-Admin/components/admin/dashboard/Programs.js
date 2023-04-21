@@ -18,7 +18,7 @@ const Programs = ({ programs }) => {
       <Row justify={"space-between"} gutter={[16, 16]}>
         {programs?.map((program) => {
           return (
-            <Col md={8} sm={12} xs={24}>
+            <Col md={8} sm={12} xs={24} key={program.name}>
               <div className={styles.card}>
                 <Image
                   src={"/assets/images/program_overview.png"}
