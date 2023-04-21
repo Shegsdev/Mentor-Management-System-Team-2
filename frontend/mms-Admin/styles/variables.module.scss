@@ -1,0 +1,15 @@
+$theme-primary: #058b94;
+$theme-light: #f7feff;
+$text-light: #808080;
+$text-dark: #141414;
+$text-default: #333;
+$primary-radius: 7px;
+
+:export {
+  themePrimary: $theme-primary;
+  themeLight: $theme-light;
+  textLight: $text-light;
+  textDark: $text-dark;
+  textDefault: $text-default;
+  primaryRadius: $primary-radius;
+}

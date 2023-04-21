@@ -1,7 +1,8 @@
 import { Col, Row, Space, Typography } from "antd";
 import { Button } from "components/Button";
 import { Icon } from "components/Icon/Icon";
-import styles from "styles/admin/dashboard.module.css";
+import styles from "styles/admin/dashboard.module.scss";
+import variables from "styles/variables.module.scss";
 
 const Tasks = ({ tasks }) => {
   const { Paragraph } = Typography;
@@ -16,16 +17,9 @@ const Tasks = ({ tasks }) => {
         <Col
           md={4}
           sm={24}
-          style={{
-            background: "#058b94",
-            borderRadius: "7px",
-            padding: "12px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          className={styles.task_status_card}
         >
-          <p style={{ fontSize: "20px", color: "#f7feff", margin: 0 }}>In Progress</p>
+          <p>In Progress</p>
         </Col>
         <Col md={20} sm={24}>
           <Row gutter={[16, 16]}>
@@ -33,9 +27,9 @@ const Tasks = ({ tasks }) => {
             return (
               <Col md={8} sm={12} xs={24}>
                 <div className={styles.card}>
-                  <Icon name="Report" width={25} height={33} color="#058B94" />
-                  <Paragraph style={{ marginLeft: "1em", display: "inline-block" }}>
-                    <p style={{ margin: 0, fontSize: "20px" }}>{task.title}</p>
+                  <Icon name="Report" width={25} height={33} color={variables.themePrimary} />
+                  <Paragraph className={styles.paragraph}>
+                    <p>{task.title}</p>
                     <small>
                       <Icon name="Calendar" />
                       {task.daysLeft} days from now
@@ -48,7 +42,7 @@ const Tasks = ({ tasks }) => {
         </Col>
       </Row>
       <Row justify={"end"}>
-        <Space style={{ marginTop: "1em" }}>
+        <Space className={styles.space}>
           <Button type="primary">View all</Button>
         </Space>
       </Row>

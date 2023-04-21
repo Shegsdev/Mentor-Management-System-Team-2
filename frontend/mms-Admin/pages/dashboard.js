@@ -2,7 +2,7 @@ import Statistics from "components/admin/dashboard/Statistics";
 import Programs from "components/admin/dashboard/Programs";
 import Reports from "components/admin/dashboard/Reports";
 
-import styles from "styles/admin/dashboard.module.css";
+import styles from "styles/admin/dashboard.module.scss";
 import Tasks from "components/admin/dashboard/Tasks";
 
 const stats = [

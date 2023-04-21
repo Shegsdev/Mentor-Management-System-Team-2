@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Col, Row, Space, Typography } from "antd";
 import { Button } from "components/Button";
-import styles from "styles/admin/dashboard.module.css";
+import styles from "styles/admin/dashboard.module.scss";
 
 const Programs = ({ programs }) => {
   const { Paragraph } = Typography;
@@ -9,10 +9,10 @@ const Programs = ({ programs }) => {
     <div className={styles.card_container}>
       <Row justify={"space-between"}>
           <Paragraph>
-            <p style={{ margin: 0 }} className={styles.card_header_text}>Programs overview</p>
+            <p className={styles.card_header_text}>Programs overview</p>
           </Paragraph>
           <Paragraph>
-            <p style={{ margin: 0 }} className={styles.card_header_text}>5 Active</p>
+            <p className={styles.card_header_text}>5 Active</p>
           </Paragraph>
       </Row>
       <Row justify={"space-between"} gutter={[16, 16]}>
@@ -26,17 +26,17 @@ const Programs = ({ programs }) => {
                   height={45}
                   alt="Program"
                 />
-                <Paragraph style={{ marginLeft: "1em", display: "inline-block" }}>
-                  <p style={{ margin: 0, fontSize: "20px" }}>{program.name}</p>
+                <Paragraph className={styles.paragraph}>
+                  <p>{program.name}</p>
                   <small>{program.level}</small>
                 </Paragraph>
-                <p style={{ margin: 0 }}>{program.date}</p>
+                <p>{program.date}</p>
               </div>
             </Col>
           )})}
       </Row>
       <Row justify={"end"}>
-        <Space style={{ marginTop: "1em" }}>
+        <Space className={styles.space}>
           <Button type="primary">View all</Button>
         </Space>
       </Row>

@@ -1,45 +1,22 @@
 import { Typography } from "antd";
 import { Icon } from "components/Icon/Icon";
 import { Button } from "components/Button";
-import styles from "styles/admin/dashboard.module.css";
+import styles from "styles/admin/dashboard.module.scss";
+import variables from "styles/variables.module.scss";
 
 const Statistics = ({ stats }) => {
   const { Title, Paragraph } = Typography;
   return (
     <div className={styles.stats}>
-      <div
-        style={{
-          background: "#058b94",
-          borderRadius: "7px",
-          padding: "12px",
-          width: "250px",
-        }}>
+      <div className={styles.active_program_card}>
         <div>
-          <div style={{ display: "flex", justifyContent: "end" }}>
+          <div className={styles.header}>
             <Button>View</Button>
           </div>
-          <Typography
-            style={{
-              display: "flex",
-              justifyContent: "start",
-              alignItems: "end",
-            }}>
-            <Title
-              level={6}
-              style={{ color: "#fff", marginRight: "12px", marginBottom: 0 }}>
-              12
-            </Title>
-            <Paragraph style={{ margin: 0 }}>
-              <p
-                style={{
-                  color: "#f7feff",
-                  margin: 0,
-                  width: "80%",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                }}>
-                Active Programs
-              </p>
+          <Typography className={styles.text_container}>
+            <Title className={styles.title}>12</Title>
+            <Paragraph className={styles.paragraph}>
+              <p>Active Programs</p>
             </Paragraph>
           </Typography>
         </div>
@@ -49,12 +26,12 @@ const Statistics = ({ stats }) => {
           {stats?.map((stat) => (
             <div className={styles.stats_card} key={stat.title}>
               <Paragraph style={{ margin: 0 }}>
-                <p style={{ margin: 0, fontSize: "20px" }}>{stat.title}</p>
-                <p style={{ margin: 0, fontSize: "20px" }}>{stat.value}</p>
+                <p>{stat.title}</p>
+                <p>{stat.value}</p>
               </Paragraph>
               <Icon
                 name={`${stat.icon}`}
-                color="#058b94"
+                color={variables.themePrimary}
                 width="32"
                 height="32"
               />
