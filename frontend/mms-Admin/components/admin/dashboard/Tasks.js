@@ -2,7 +2,6 @@ import { Col, Row, Space, Typography } from "antd";
 import { Button } from "components/Button";
 import { Icon } from "components/Icon/Icon";
 import styles from "styles/admin/dashboard.module.scss";
-import variables from "styles/variables.module.scss";
 
 const Tasks = ({ tasks }) => {
   const { Paragraph } = Typography;
@@ -27,7 +26,7 @@ const Tasks = ({ tasks }) => {
             return (
               <Col md={8} sm={12} xs={24} key={task.title}>
                 <div className={styles.card}>
-                  <Icon name="Report" width={25} height={33} color={variables.themeprimary} />
+                  <Icon name="Report" width={25} height={33} color="#058b94" />
                   <Paragraph className={styles.paragraph}>
                     <p>{task.title}</p>
                     <small>

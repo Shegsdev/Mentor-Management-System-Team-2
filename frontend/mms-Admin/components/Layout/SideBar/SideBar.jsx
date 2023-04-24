@@ -3,9 +3,7 @@ import { useState } from "react";
 import { Layout, Menu, Typography } from "antd";
 import { Icon } from "components/Icon/Icon";
 import { SidebarMenu } from "components/SidebarMenu";
-
 import styles from "styles/sidebar.module.scss";
-import variables from "styles/variables.module.scss"
 
 const SideBar = ({ user }) => {
   const [state, setState] = useState({ name: "James", role: "Admin" });
@@ -15,7 +13,7 @@ const SideBar = ({ user }) => {
   return (
     <Sider
       className={styles.sidebar_layout}
-      style={{ background: variables.themelight }}
+      style={{ background: "#f7feff" }}
       width={250}
       breakpoint="lg"
       collapsedWidth="0"

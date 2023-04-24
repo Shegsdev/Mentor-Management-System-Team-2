@@ -4,12 +4,3 @@ $text-light: #808080;
 $text-dark: #141414;
 $text-default: #333;
 $primary-radius: 7px;
-
-:export {
-  themeprimary: $theme-primary;
-  themelight: $theme-light;
-  textlight: $text-light;
-  textdark: $text-dark;
-  textdefault: $text-default;
-  primaryradius: $primary-radius;
-}

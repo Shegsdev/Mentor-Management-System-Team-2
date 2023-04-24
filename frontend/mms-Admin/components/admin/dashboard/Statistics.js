@@ -2,7 +2,6 @@ import { Typography } from "antd";
 import { Icon } from "components/Icon/Icon";
 import { Button } from "components/Button";
 import styles from "styles/admin/dashboard.module.scss";
-import variables from "styles/variables.module.scss";
 
 const Statistics = ({ stats }) => {
   const { Title, Paragraph } = Typography;
@@ -31,7 +30,7 @@ const Statistics = ({ stats }) => {
               </Paragraph>
               <Icon
                 name={`${stat.icon}`}
-                color={variables.themeprimary}
+                color="#058b94"
                 width="32"
                 height="32"
               />
