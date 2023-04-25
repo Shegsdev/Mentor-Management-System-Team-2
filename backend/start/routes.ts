@@ -27,11 +27,18 @@ Route.get('/', async () => {
 Route.group(() => {
   Route.group(() => {
     Route.post('/login', 'AuthenticationController.login')
-    Route.post('/forgetpassword', 'AuthenticationController.forgetPassword')
-    Route.post('/resetpassword', 'AuthenticationController.resetPassword')
+    Route.post('/forget-password', 'AuthenticationController.forgetPassword')
+    Route.post('/reset-password', 'AuthenticationController.resetPassword')
     Route.get('/google/redirect', 'AuthenticationController.redirectToGoogle')
     Route.get('/google', 'AuthenticationController.googleLogin')
   }).prefix('auth')
+
+  Route.group(() => {
+    Route.get('/mentors', 'UserController.getAllMentors')
+    Route.get('/mentor-managers', 'UserController.getAllMentors')
+  }).prefix('user')
+
+
 
   Route.group(() => {
     Route.get('/:userId', 'ProfilesController.getByUserId')
@@ -39,6 +46,23 @@ Route.group(() => {
     Route.put('/delete/:userId', 'ProfilesController.delete')
   }).prefix('profile')
 
+  Route.group(()=>{
+    Route.get('/', 'TaskController.index')
+    Route.post('/', 'TaskController.create')
+    Route.put('/:taskId', 'TaskController.update')
+    Route.get('/:taskId', 'TaskController.show')
+    Route.delete('/delete/:taskId', 'TaskController.delete')
+  }).prefix('task').middleware('auth')
+
+  Route.group(()=>{
+    Route.get('/', 'TaskReportController.getAllReports')
+    Route.post('/:taskId/', 'TaskReportController.createTaskReport')
+    Route.get('/:reportId', 'TaskReportController.getReport')
+    Route.get('/:reportId/pdf', 'TaskReportController.downloadReportPDF')
+    Route.post('/:reportId/pdf', 'TaskReportController.shareReport')
+    Route.delete('/:reportId','TaskReportController.deleteReport' )
+  }).prefix('task-reports')
+  
   Route.group(() => {
     Route.get('/', 'NotificationSettingsController.getUserNotificationSettings')
     Route.put('/', 'NotificationSettingsController.updateUserNotificationSettings')
