@@ -19,7 +19,7 @@ const Reports = ({ reports, loading }) => {
       <Row justify={"start"} gutter={[16, 16]}>
         {reports.slice(0, 3)?.map((report) => {
           return (
-            <Col md={8} sm={12} xs={24} key={report.title}>
+            <Col md={8} sm={12} xs={24} key={report.id}>
             {loading ? <Loader /> : (
               <div className={styles.card}>
                 <Icon name={report?.task ? "Task" : "Report"} width={25} height={33} color="#058B94" />
