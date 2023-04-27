@@ -1,9 +1,28 @@
 import Image from "next/image";
 import { Col, Row, Space, Typography } from "antd";
 import { Button } from "components/Button";
+import { Loader } from "components/Loader";
 import styles from "styles/admin/dashboard.module.scss";
 
-const Programs = ({ programs }) => {
+const programs_ = [
+  {
+    name: "GADS Program 2022",
+    level: "50%",
+    date: "Apr 21, 2023",
+  },
+  {
+    name: "GADS Program 2023",
+    level: "50%",
+    date: "Apr 21, 2023",
+  },
+  {
+    name: "GADS Program 2024",
+    level: "50%",
+    date: "Apr 21, 2023",
+  },
+];
+
+const Programs = ({ programs, loading }) => {
   const { Paragraph } = Typography;
   return (
     <div className={styles.card_container}>
@@ -12,13 +31,14 @@ const Programs = ({ programs }) => {
             <p className={styles.card_header_text}>Programs overview</p>
           </Paragraph>
           <Paragraph>
-            <p className={styles.card_header_text}>5 Active</p>
+            <p className={styles.card_header_text}>{programs.length} Active</p>
           </Paragraph>
       </Row>
-      <Row justify={"space-between"} gutter={[16, 16]}>
-        {programs?.map((program) => {
+      <Row justify={"start"} gutter={[16, 16]}>
+        {programs_.slice(0, 3)?.map((program) => {
           return (
             <Col md={8} sm={12} xs={24} key={program.name}>
+            {loading ? <Loader /> : (
               <div className={styles.card}>
                 <Image
                   src={"/assets/images/program_overview.png"}
@@ -31,7 +51,7 @@ const Programs = ({ programs }) => {
                   <small>{program.level}</small>
                 </Paragraph>
                 <p>{program.date}</p>
-              </div>
+              </div>)}
             </Col>
           )})}
       </Row>

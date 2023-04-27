@@ -97,6 +97,11 @@
   display: flex;
   justify-content: space-between;
   width: 230px;
+
+  p {
+    margin: 0;
+    font-size: 20px;
+  }
 }
 
 .card_header_text {
