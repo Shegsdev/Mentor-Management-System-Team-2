@@ -34,15 +34,14 @@ Route.group(() => {
   }).prefix('auth')
 
   Route.group(() => {
+    Route.get('/', 'UserController.getAllUsers')
     Route.get('/mentors', 'UserController.getAllMentors')
-    Route.get('/mentor-managers', 'UserController.getAllMentors')
+    Route.get('/mentor-managers', 'UserController.getAllMentorManagers')
   }).prefix('user')
 
-
-
   Route.group(() => {
-    Route.get('/:userId', 'ProfilesController.getByUserId')
-    Route.put('/:userId', 'ProfilesController.update')
+    Route.get('/', 'ProfilesController.getByUserId')
+    Route.put('/', 'ProfilesController.update')
     Route.put('/delete/:userId', 'ProfilesController.delete')
   })
     .prefix('profile')
@@ -54,16 +53,32 @@ Route.group(() => {
     Route.put('/:taskId', 'TaskController.update')
     Route.get('/:taskId', 'TaskController.show')
     Route.delete('/delete/:taskId', 'TaskController.delete')
-  }).prefix('task').middleware('auth')
+  })
+    .prefix('task')
+    .middleware('auth')
 
-  Route.group(()=>{
+  Route.group(() => {
     Route.get('/', 'TaskReportController.getAllReports')
     Route.post('/:taskId/', 'TaskReportController.createTaskReport')
     Route.get('/:reportId', 'TaskReportController.getReport')
     Route.get('/:reportId/pdf', 'TaskReportController.downloadReportPDF')
     Route.post('/:reportId/pdf', 'TaskReportController.shareReport')
-    Route.delete('/:reportId','TaskReportController.deleteReport' )
+    Route.delete('/:reportId', 'TaskReportController.deleteReport')
   }).prefix('task-reports')
+
+  Route.group(() => {
+    Route.get('/', 'PostController.getAllPosts')
+    Route.post('/', 'PostController.createPost')
+    Route.put('/:postId', 'PostController.updatePost')
+    Route.delete('/:postId', 'PostController.deletePost')
+    Route.get('/:postId', 'PostController.getPostWithComments')
+  }).prefix('post')
+
+  Route.group(() => {
+    Route.post('/:postId', 'CommentController.createComment')
+    Route.put('/:postId/:commentId', 'CommentController.updateComment')
+    Route.delete('/:postId/:commentId', 'CommentController.deleteComment')
+  }).prefix('comment')
 
   Route.group(() => {
     Route.get('/', 'NotificationSettingsController.getUserNotificationSettings')
@@ -84,6 +99,14 @@ Route.group(() => {
     Route.post('/', 'SupportRequestsController.createRequest')
   })
     .prefix('support-request')
+    .middleware('auth')
+
+  Route.group(() => {
+    Route.get('/sent', 'BroadcastMessagesController.sent')
+    Route.get('/received', 'BroadcastMessagesController.received')
+    Route.post('/', 'BroadcastMessagesController.create')
+  })
+    .prefix('broadcast')
     .middleware('auth')
 
   Route.group(() => {
