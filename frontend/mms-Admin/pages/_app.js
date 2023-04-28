@@ -8,8 +8,11 @@ import ContextProvider from "store/context";
 import "antd/dist/reset.css";
 import "styles/globals.css";
 import { styles } from "styles/_app";
+import { useLogin } from '../hooks/useLogin'
+import { useEffect } from 'react'
 
 const App = ({ Component, pageProps, session }) => {
+
   const router = useRouter();
   return (
     <>
