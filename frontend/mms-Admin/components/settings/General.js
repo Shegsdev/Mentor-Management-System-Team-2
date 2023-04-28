@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Icon from "../Icon";
 import styles from "../componentStyles/general.module.css";
-import { Avatar, Button, Col, Input, Row, Select } from "antd";
+import { Avatar, Col, Input, Row, Select } from "antd";
+import { Button } from "components/Button";
 import {
   CustomButton,
   CustomInput,
   CustomTextArea,
 } from "components/formInputs/CustomInput";
 import { validateInputs } from "../../utils/validateInputs";
-import { setProfile } from "../../utils/http";
+import { getProfile, setProfile } from '../../utils/http'
 import SuccessMessage from "../SuccessMessage";
+import { useLogin } from '../../hooks/useLogin'
 
 function General() {
   const [profileData, setProfileData] = useState({
@@ -24,14 +26,16 @@ function General() {
     twitter: "",
     linkedin: "",
   });
-  const [token, setToken] = useState("");
+  const {token} = useLogin()
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("token"))) {
-      setToken(JSON.parse(localStorage.getItem("token")));
-    }
-  }, []);
+
+  useEffect(()=>{
+    (async()=>{
+      const profile = await getProfile(token)
+      setProfileData(profile?.data || {})
+    })()
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -143,12 +147,40 @@ function General() {
           size={"large"}
           placeholder="Select Country"
           className={styles.select}
+          options={[
+            {
+              label: 'Nigeria',
+              value: 'Nigeria'
+            },
+            {
+              label: 'Ghana',
+              value: 'Ghana'
+            },
+            {
+              label: 'United State of America',
+              value: 'USA'
+            },
+          ]}
         />
         <label className={styles.select_label}>City</label>
         <Select
           size={"large"}
           placeholder="Select City"
           className={styles.select}
+          options={[
+            {
+              label: 'Lagos',
+              value: 'Lagos'
+            },
+            {
+              label: 'Abuja',
+              value: 'Abuja'
+            },
+            {
+              label: 'Accra',
+              value: 'Accra'
+            },
+          ]}
         />
       </div>
 
@@ -245,16 +277,14 @@ function General() {
         </Col>
       </div>
       <div className={styles.btn_container}>
-        <CustomButton onClick={handleSubmit}>
+        <Button type="primary" size="large" onClick={handleSubmit}>
           <span className={styles.btn_text}>Save Changes</span>
-        </CustomButton>
+        </Button>
       </div>
       {success && (
         <SuccessMessage
           image={"/assets/images/success.png"}
-          message={"Password Reset Successful"}
-          width={"220px"}
-          height={"165px"}
+          message={"Profile Information updated Successful"}
           isModalOpen={success}
           setIsModalOpen={setSuccess}
         />
