@@ -10,18 +10,16 @@ import { capitalize } from "utils/capitalize";
 import { Loader } from "components/Loader";
 import { Button } from "components/Button";
 import { useRouter } from "next/router";
+import { useLogin } from '../hooks/useLogin'
 
 function About() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  let token = "";
+  const {token} = useLogin()
 
   const router = useRouter();
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("token"))) {
-      token = JSON.parse(localStorage.getItem("token"));
-    }
     fetch();
   }, []);
 

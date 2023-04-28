@@ -7,6 +7,9 @@ import SuccessMessage from "components/SuccessMessage";
 import { fetchPrivacySettings, updatePrivacySettings } from "pages/api/setting";
 import { useStateValue } from "store/context";
 
+import { fetchPrivacySettings, updatePrivacySettings } from "pages/api/setting";
+import { useStateValue } from "store/context";
+
 const inputFields = [
   {
     name: "show_contact_info",
