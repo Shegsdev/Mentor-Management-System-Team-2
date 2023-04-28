@@ -23,10 +23,9 @@ const Tasks = ({ tasks, loading }) => {
         </Col>
         <Col md={20} sm={24}>
           <Row gutter={[16, 16]}>
-          {tasks.slice(0, 3)?.map((task) => {
+          {tasks?.map((task) => {
             return (
               <Col md={8} sm={12} xs={24} key={task.title}>
-                {loading ? <Loader /> : (
                 <div className={styles.card}>
                   <Icon name="Task" width={25} height={33} color="#058b94" />
                   <Paragraph className={styles.paragraph}>
@@ -36,7 +35,7 @@ const Tasks = ({ tasks, loading }) => {
                       {task.daysLeft} 2 days from now
                     </small>
                   </Paragraph>
-                </div>)}
+                </div>
               </Col>
             )})}
           </Row>
