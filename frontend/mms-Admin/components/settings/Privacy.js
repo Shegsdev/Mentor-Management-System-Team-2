@@ -7,6 +7,9 @@ import SuccessMessage from "components/SuccessMessage";
 import { fetchPrivacySettings, updatePrivacySettings } from "pages/api/setting";
 import { useStateValue } from "store/context";
 
+import { fetchPrivacySettings, updatePrivacySettings } from "pages/api/setting";
+import { useStateValue } from "store/context";
+
 const inputFields = [
   {
     name: "show_contact_info",
@@ -60,7 +63,7 @@ const Privacy = () => {
 
   const handleUpdate = debounce(async () => {
     const payload = {
-      "privacy": settings
+      privacy: settings
     };
     try {
       const response = await updatePrivacySettings(payload);
