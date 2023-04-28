@@ -1,40 +1,42 @@
 import React, { useEffect, useState } from "react";
+import debounce from "lodash.debounce";
 import styles from "../componentStyles/privacy.module.scss"
 import ToggleInput from "components/ToggleInput";
 
 import { fetchPrivacySettings, updatePrivacySettings } from "pages/api/setting";
+import { useStateValue } from "store/context";
 
 const inputFields = [
   {
-    name: "showContactInfo",
+    name: "show_contact_info",
     label: "Show contact info",
   },
   {
-    name: "showGithubInfo",
+    name: "show_github",
     label: "Show GitHub",
   },
   {
-    name: "showInstagramInfo",
+    name: "show_instagram",
     label: "Show Instagram",
   },
   {
-    name: "showLinkedinInfo",
+    name: "show_linkedin",
     label: "Show LinkedIn",
   },
   {
-    name: "showTwitterInfo",
+    name: "show_twitter",
     label: "Show Twitter",
   }
 ];
 const Privacy = () => {
-  const [state, setState] = useState(() => Object.fromEntries(inputFields.map(input => [input.name, false])));
   const [settings, setSettings] = useState({});
+  const [_, dispatch] = Object.values(useStateValue());
 
   useEffect(() => {
     const getSettings = async () => {
       try {
-        const { data } = await fetchPrivacySettings();
-        setSettings(data);
+        const { data: { settings } } = await fetchPrivacySettings();
+        setSettings(settings?.privacy);
       } catch (error) {}
     }
 
@@ -42,24 +44,28 @@ const Privacy = () => {
   }, []);
   
   const handleChange = (name) => {
-    setState((prevState) => {
+    setSettings((prevState) => {
       return {
         ...prevState, [name]: !prevState[name]
       }
     });
+    handleUpdate();
   };
 
-  const handleUpdate = async () => {
+  const handleUpdate = debounce(async () => {
     const payload = {
       privacy: settings
     };
     try {
       const response = await updatePrivacySettings(payload);
       if (response.status == 200) {
-        // handle success
+        dispatch({
+          type: "UPDATE_PRIVACY_SETTINGS",
+          payload: response?.data
+        });
       }
     } catch (error) {}
-  };
+  }, 2000);
 
   return (
     <div className={styles.main}>
@@ -67,7 +73,7 @@ const Privacy = () => {
         <ToggleInput
           key={field.name}
           label={field.label}
-          checked={state[field.name]}
+          checked={settings[field.name]}
           handleChange={() => handleChange(field.name)} />
       ))}
     </div>
