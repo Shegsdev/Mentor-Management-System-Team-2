@@ -32,7 +32,7 @@ const Tasks = ({ tasks, loading }) => {
                   <Paragraph className={styles.paragraph}>
                     <p>{task.title}</p>
                     <small>
-                      <Icon name="Calendar" />
+                      <Icon name="Calendar" width={18} height={18} />
                       {task.daysLeft} 2 days from now
                     </small>
                   </Paragraph>

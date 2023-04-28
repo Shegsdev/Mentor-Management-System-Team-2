@@ -50,20 +50,23 @@ const Dashboard = () => {
     const getData = async () => {
       setLoading(true);
       try {
-        const { data: mentors } = await fetchMentors();
+        const { data: { mentors } } = await fetchMentors();
         const { data: tasks } = await fetchTasks();
         const { data: reports } = await fetchTaskReports();
-        const { data: managers } = await fetchMentorManagers();
+        const { data: { mentorManagers } } = await fetchMentorManagers();
         const { data: programs } = await fetchPrograms();
 
         setState((prev) => ({
           ...prev,
           mentors,
-          tasks: tasks.data,
-          managers,
-          reports,
-          programs: programs.data
+          tasks: tasks?.data,
+          managers: mentorManagers,
+          reports: reports?.responseData,
+          programs: programs?.data
         }));
+
+        // TODO:
+        // Persist data to store
       } catch (error) {}
       setLoading(false);
     };
@@ -89,9 +92,9 @@ const Dashboard = () => {
   return (
     <div className={styles.dashboard}>
       <Statistics stats={getStats()} loading={loading} />
-      <Programs programs={state.programs} loading={loading} />
-      <Reports reports={state.reports} loading={loading} />
-      <Tasks tasks={state.tasks} loading={loading} />
+      <Programs programs={state.programs.slice(0 ,3)} loading={loading} />
+      <Reports reports={state.reports.slice(0, 3)} loading={loading} />
+      <Tasks tasks={state.tasks.slice(0, 3)} loading={loading} />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-const localStorage = window.localStorage;
+const localStorage = global?.window?.localStorage;
 
 export const save = (key, data) =>
   localStorage.setItem(key, JSON.stringify(data));

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Col, Row, Space, Typography } from "antd";
+import { Col, Row, Space, Typography, Progress } from "antd";
 import { Button } from "components/Button";
 import { Loader } from "components/Loader";
 import styles from "styles/admin/dashboard.module.scss";
@@ -7,17 +7,17 @@ import styles from "styles/admin/dashboard.module.scss";
 const programs_ = [
   {
     name: "GADS Program 2022",
-    level: "50%",
+    level: 50,
     date: "Apr 21, 2023",
   },
   {
     name: "GADS Program 2023",
-    level: "50%",
+    level: 50,
     date: "Apr 21, 2023",
   },
   {
     name: "GADS Program 2024",
-    level: "50%",
+    level: 50,
     date: "Apr 21, 2023",
   },
 ];
@@ -35,7 +35,7 @@ const Programs = ({ programs, loading }) => {
           </Paragraph>
       </Row>
       <Row justify={"start"} gutter={[16, 16]}>
-        {programs_.slice(0, 3)?.map((program) => {
+        {programs_?.map((program) => {
           return (
             <Col md={8} sm={12} xs={24} key={program.name}>
             {loading ? <Loader /> : (
@@ -48,7 +48,10 @@ const Programs = ({ programs, loading }) => {
                 />
                 <Paragraph className={styles.paragraph}>
                   <p>{program.name}</p>
-                  <small>{program.level}</small>
+                  <Row justify={"space-between"}>
+                    <Col span={4}><small>{program.level}%</small></Col>
+                    <Col span={18}><Progress percent={program.level} size="small" showInfo={false} strokeColor="#058B94" /></Col>
+                  </Row>
                 </Paragraph>
                 <p>{program.date}</p>
               </div>)}
