@@ -1,28 +1,20 @@
 import moment from "moment";
-import { Avatar, Col, Row } from "antd";
+import { Avatar, Col, Row, Typography } from "antd";
 import React, { useEffect, useState } from "react";
-import styles from "../styles/admin/about.module.css";
+import styles from "../styles/admin/about.module.scss";
 import Icon from "../components/Icon.js";
-import { NG } from "country-flag-icons/react/3x2";
 import IconWithText from "components/Icon/IconWithText";
-import { Icon as Iconn } from "components/Icon/Icon";
 import { fetchUserProfile } from "pages/api/user";
 import { capitalize } from "utils/capitalize";
 import { Loader } from "components/Loader";
 import { Button } from "components/Button";
 import { useRouter } from "next/router";
 
-const profileMeta = [
-  { label: "Email", name: "email", icon: "Mail" },
-  { label: "Location", name: "location", icon: "Location" },
-  { label: "Website", name: "website", icon: "Globe" },
-  { label: "Member Since", name: "created_at", icon: "Calendar" },
-];
-
 function About() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const { Paragraph } = Typography;
 
   const router = useRouter();
   useEffect(() => {
@@ -64,13 +56,6 @@ function About() {
     e.preventDefault();
     router.push("/settings");
   };
-
-  const renderMetaText = (meta, name) => {
-    if (!meta) return "NIL";
-    if (name == "created_at")
-      return `Member since ${moment(meta).format('ll')}`;
-    return meta;
-  }
 
   return (
     <>
@@ -114,15 +99,12 @@ function About() {
           </div>
         </Col>
         <Col span={24}>
-          {profileMeta.map((profile) => (
-            <IconWithText
-              container={styles.icon_container}
-              color={styles.icon_color}
-              styles={styles.icon}
-              text={renderMetaText(data[profile.name], profile.name)}>
-              <Iconn name={profile.icon} />
-            </IconWithText>
-          ))}
+          <Paragraph className={styles.meta}>
+            <div><h4>Location:</h4><p>{data?.location || "NIL"}</p></div>
+            <div><h4>Email:</h4><p>{data?.location || "NIL"}</p></div>
+            <div><h4>Website:</h4><p>{data?.meta?.website || "NIL"}</p></div>
+           <div> <h4>Member Since:</h4><p>{moment(data?.created_at).format("ll")}</p></div>
+          </Paragraph>
         </Col>
         <Col span={24}>
           <p className={styles.about_title}>Socials</p>
