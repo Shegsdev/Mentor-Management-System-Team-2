@@ -304,7 +304,7 @@ function General() {
       {success && (
         <SuccessMessage
           image={"/assets/images/success.png"}
-          message={"Profile Information updated Successful"}
+          message={"Profile Information Updated Successfully"}
           isModalOpen={success}
           setIsModalOpen={setSuccess}
         />
