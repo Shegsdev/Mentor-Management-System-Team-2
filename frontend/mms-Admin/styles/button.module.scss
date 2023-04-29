@@ -32,3 +32,9 @@
     padding: 18px 65px;
   }
 }
+
+.pseudo {
+  &:active {
+    outline: 4px solid #b9dade;
+  }
+}

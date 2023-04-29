@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Icon from "../Icon";
 import styles from "../componentStyles/general.module.css";
-import { Avatar, Col, Input, Row, Select } from "antd";
-import { Button } from "components/Button";
+import { Avatar, Col, Input, Row, Select, Button } from "antd";
 import {
   CustomInput,
   CustomTextArea,
@@ -293,11 +292,9 @@ function General() {
       </div>
       <div className={styles.btn_container}>
         <Button
-          type="primary"
-          htmlType="submit"
-          size="large"
-          onClick={handleSubmit}
-          attribute={loading ? { disabled: "disabled" } : ""}>
+          className={styles.btn}
+          loading={loading}
+          onClick={handleSubmit}>
           <span className={styles.btn_text}>Save Changes</span>
         </Button>
       </div>

@@ -6,7 +6,7 @@ const SettingsLayout = ({ children }) => {
   return (
     <Row justify={"space-between"}>
       <Col span={4}><Sidebar /></Col>
-      <Col><div className={styles.sub_div}>{children}</div></Col>
+      <Col span={18}><div className={styles.sub_div}>{children}</div></Col>
     </Row>
   );
 };
