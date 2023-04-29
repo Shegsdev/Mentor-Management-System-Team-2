@@ -4,21 +4,26 @@ import styles from "../componentStyles/general.module.css";
 import { Avatar, Col, Input, Row, Select } from "antd";
 import { Button } from "components/Button";
 import {
-  CustomButton,
   CustomInput,
   CustomTextArea,
 } from "components/formInputs/CustomInput";
 import { validateInputs } from "../../utils/validateInputs";
-import { getProfile, setProfile } from '../../utils/http'
 import SuccessMessage from "../SuccessMessage";
-import { useLogin } from '../../hooks/useLogin'
+import { fetchUserProfile, updateUserProfile } from "pages/api/user";
+
+const initialProfileData = {
+  first_name: "",
+  last_name: "",
+  email: "",
+  bio: "",
+  wesite: "",
+  country: "",
+  city: ""
+};
 
 function General() {
-  const [profileData, setProfileData] = useState({
-    first_name: "",
-    last_name: "",
-    bio: "",
-  });
+  const [loading, setLoading] = useState(false);
+  const [profileData, setProfileData] = useState(initialProfileData);
 
   const [sMedia, setSmedia] = useState({
     instagram: "",
@@ -26,23 +31,36 @@ function General() {
     twitter: "",
     linkedin: "",
   });
-  const {token} = useLogin()
   const [success, setSuccess] = useState(false);
 
 
   useEffect(()=>{
     (async()=>{
-      const profile = await getProfile(token)
-      setProfileData(profile?.data || {})
-    })()
-  }, [])
+      const profile = await fetchUserProfile();
+      setProfileData(profile?.data || {});
+      setSmedia(profile?.data?.social_media_links);
+    })();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const valid = validateInputs(profileData);
-    if (valid && token) {
+    if (valid) {
       try {
-        const response = await setProfile(profileData, sMedia, token);
+        const {
+          bio,
+          email,
+          first_name,
+          last_name,
+          website,
+          country,
+          city
+        } = profileData;
+        const response = await updateUserProfile({
+          bio, email, first_name, last_name, website, country, city, social_media_links: sMedia
+        });
+        console.log(response)
         if (response.status === 200) {
           setSuccess(true);
         }
@@ -55,6 +73,7 @@ function General() {
           throw response;
         }
       } catch (e) {}
+      setLoading(false);
     }
   };
 
@@ -205,7 +224,6 @@ function General() {
               value={sMedia.github}
               onChange={handleSocials}
               className={styles.input_border}
-              placeholder="@githubuser"
             />
           </div>
         </Col>
@@ -226,7 +244,6 @@ function General() {
               value={sMedia.instagram}
               onChange={handleSocials}
               className={styles.input_border}
-              placeholder="@instagramuser"
             />
           </div>
         </Col>
@@ -250,7 +267,6 @@ function General() {
               value={sMedia.linkedin}
               onChange={handleSocials}
               className={styles.input_border}
-              placeholder="@linkedInuser"
             />
           </div>
         </Col>
@@ -271,13 +287,17 @@ function General() {
               value={sMedia.twitter}
               onChange={handleSocials}
               className={styles.input_border}
-              placeholder="@twitteruser"
             />
           </div>
         </Col>
       </div>
       <div className={styles.btn_container}>
-        <Button type="primary" size="large" onClick={handleSubmit}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          size="large"
+          onClick={handleSubmit}
+          attribute={loading ? { disabled: "disabled" } : ""}>
           <span className={styles.btn_text}>Save Changes</span>
         </Button>
       </div>

@@ -6,6 +6,11 @@
   cursor: pointer;
   padding: 6px 15px;
 
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
   &.primary {
     background: $theme-primary;
     color: $theme-light;
