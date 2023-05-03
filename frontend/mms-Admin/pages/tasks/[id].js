@@ -103,7 +103,6 @@ const EditTask = () => {
       const response = await updateTask(taskId, payload);
       if (response.status == 200) {
         setOpenModal(true);
-        setTimeout(() => router.reload(), 3000);
       }
     } catch (e) {}
     finally {
@@ -225,6 +224,7 @@ const EditTask = () => {
         isModalOpen={openModal}
         image={"/assets/images/task_success.png"}
         setIsModalOpen={handleModal}
+        reloadPage={true}
       />
     </>
   );
