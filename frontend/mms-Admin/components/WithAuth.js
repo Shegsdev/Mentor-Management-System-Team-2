@@ -7,6 +7,7 @@ const WithAuth = ({ component, route }) => {
   const authRoutes = ["/login", "/reset-password"];
   const router = useRouter();
   const {token} = useLogin()
+
   useEffect(() => {
     if (!authRoutes.includes(route) && !token) {
       router.push("/login");

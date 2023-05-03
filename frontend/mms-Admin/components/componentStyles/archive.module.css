@@ -6,6 +6,7 @@
   border: 1px solid #e6e6e6;
   border-radius: 5px;
   display: flex;
+  margin-bottom: 1rem;
 }
 
 .main_sub_icon {
@@ -56,5 +57,5 @@
 }
 
 .main_sub_content_archor {
-  padding-left: 26rem;
+  padding-left: 20rem;
 }

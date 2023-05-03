@@ -3,7 +3,6 @@ import styles from "styles/tasks.module.css";
 import Icon from 'components/Icon';
 import moment from 'moment';
 import { Row, Col, Form } from 'antd';
-import DeleteTask from 'components/DeleteTask';
 
 const NewTask = () => {
   const [state, stateState] = useState({ title: "", details: "" });
