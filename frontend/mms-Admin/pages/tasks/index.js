@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import styles from "../styles/tasks.module.css";
-import TasksSidebar from '../components/TasksSidebar';
-import Icon from '../components/Icon';
-import { CustomButton } from '../components/formInputs/CustomInput';
+import styles from "../../styles/tasks.module.css";
+import TasksSidebar from '../../components/TasksSidebar';
+import Icon from '../../components/Icon';
+import { CustomButton } from '../../components/formInputs/CustomInput';
 import moment from 'moment';
 import { Card } from 'antd';
 import toast from 'react-hot-toast';
