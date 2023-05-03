@@ -13,7 +13,7 @@ const NavBar = () => {
   const ref = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [recentNotifications, setRecentNotifications] = useState([]);
-  const { isMobileSideBarOpen, setMobileSideBarState } = useContext(GlobalContext);
+  const { isMobileSideBarOpen, setMobileSideBarState, logout } = useContext(GlobalContext);
 
   const router = useRouter();
 
@@ -35,8 +35,7 @@ const NavBar = () => {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    localStorage.clear();
-    sessionStorage.clear();
+    logout();
     router.push("/login");
   };
 

@@ -8,9 +8,6 @@ import getUserRole from "../utils/getUserRole.js";
 import Link from "next/link";
 
 export const PostCard = ({ data, fullPost, names }) => {
-  console.log("from coments");
-  console.log(data);
-
   const router = useRouter();
 
   const handleCommentsClick = (e, id, name) => {
