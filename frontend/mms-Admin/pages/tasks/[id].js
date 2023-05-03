@@ -101,7 +101,7 @@ const EditTask = () => {
 
     try {
       const response = await updateTask(taskId, payload);
-      if (response.status == 200) {
+      if (response.status === 200) {
         setOpenModal(true);
       }
     } catch (e) {}

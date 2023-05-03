@@ -92,7 +92,7 @@ const NewTask = () => {
 
     try {
       const response = await createTask(payload);
-      if (response.status == 200) {
+      if (response.status === 200) {
         setOpenModal(true);
       }
     } catch (e) {}
