@@ -11,7 +11,7 @@ import DeleteTask from 'components/DeleteTask';
 
 function tasks() {
   const [data, setData] = useState(null);
-  
+
   const handleDataChange = newData => {
     setData(newData);
   };
