@@ -1,45 +1,76 @@
-import { useState } from "react";
+import { useContext, useState, useRef } from 'react'
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { Icon } from "components/Icon/Icon";
-import { Avatar, Badge, Col, Input, Row } from "antd";
+import { Avatar, Badge, Input } from "antd";
+
+import styles from "styles/navbar.module.scss";
+import { BarsOutlined } from '@ant-design/icons'
+import { GlobalContext } from '../../../Context/store'
 
 const NavBar = () => {
-  const recentNotifications = useState([]);
+  const ref = useRef(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [recentNotifications, setRecentNotifications] = useState([]);
+  const { isMobileSideBarOpen, setMobileSideBarState, logout } = useContext(GlobalContext);
 
-  const { Search } = Input;
+  const router = useRouter();
 
   const notificationCount = (count) => {
     if (count == 20) return "20+";
     else return count;
   };
 
-  return (
-    <header className="header">
-      <Row justify={"space-evenly"} align={"middle"}>
-        <Col md={12} sm={8} xs={4}>
-          <Row align={"middle"}>
-            <Image
-              width={80}
-              height={80}
-              src={"/assets/images/logo_small.png"}
-              alt="logo"
-            />
-            <span className="logo-text">Mentor&apos;s Managers System</span>
-          </Row>
-        </Col>
+  const handleDropdown = (e) => {
+    e.preventDefault();
+    setModalOpen(!modalOpen);
+  };
 
-        <Col span={12}>
-          <Row gutter={[16, 8, 4]} align={"middle"} justify={"space-around"}>
-            <Col className="gutter-row">
-              <Search
-                placeholder="Search for anything"
-                enterButton=""
-                size="large"
-                style={{ width: 540 }}
-              />
-            </Col>
-            <Col className="gutter-row">
+  const handleRedirect = (e) => {
+    e.preventDefault();
+    setModalOpen(false);
+    router.push("/dashboard");
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+    router.push("/login");
+  };
+
+  return (
+    <header className={styles.header}>
+      <div className={styles.navbar}>
+        <div className={styles.logo_container}>
+          <Image
+            width={69}
+            height={69}
+            src={"/assets/images/logo_small.png"}
+            alt="logo"
+          />
+          <span className={styles.logo_text}>
+            Mentor&apos;s Managers System
+          </span>
+        </div>
+
+        <div className={styles.navbar_right}>
+          <div className={styles.navbar_search_container}>
+            <Input
+              className={styles.navbar_search}
+              placeholder="Search for anything"
+              prefix={<Icon name="Search" />}
+              size="large"
+              type="search"
+            />
+          </div>
+          <div className={styles.navbar_icons_size}>
+                <Badge>
+                  <BarsOutlined onClick={()=> setMobileSideBarState(!isMobileSideBarOpen)}  />
+                </Badge>
+          </div>
+          <div className={styles.navbar_icons}>
+            <div>
               <Link href="/home">
                 <a>
                   <Badge>
@@ -47,8 +78,8 @@ const NavBar = () => {
                   </Badge>
                 </a>
               </Link>
-            </Col>
-            <Col className="gutter-row">
+            </div>
+            <div>
               <Link href="/home">
                 <a>
                   <Badge count={notificationCount(recentNotifications?.length)}>
@@ -56,17 +87,25 @@ const NavBar = () => {
                   </Badge>
                 </a>
               </Link>
-            </Col>
-            <Col className="gutter-row">
-              <Link href="/profile">
-                <a>
-                  <Avatar src="" />
-                </a>
-              </Link>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+            </div>
+            <div>
+              <a onClick={handleDropdown}>
+                <Avatar src="/assets/images/admin_avatar.png" size={42} />
+              </a>
+              <dialog ref={ref} open={modalOpen} className={styles.dropdown}>
+                <ul>
+                  <li>
+                    <a onClick={handleRedirect}>Dashboard</a>
+                  </li>
+                  <li>
+                    <a onClick={handleLogout}>Logout</a>
+                  </li>
+                </ul>
+              </dialog>
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
   );
 };

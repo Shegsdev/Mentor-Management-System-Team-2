@@ -1,15 +1,11 @@
+import { useEffect } from "react";
 import { useRouter } from "next/router";
+import Dashboard from './dashboard'
+import { useLogin } from '../hooks/useLogin'
 
-const Login = () => {
-  const router = useRouter();
-
-  return (
-    <>
-      <div>
-        <h1>Hello World</h1>
-      </div>
-    </>
-  );
+const Index = () => {
+  return <Dashboard />
 };
 
-export default Login;
+export default Index;
+ 

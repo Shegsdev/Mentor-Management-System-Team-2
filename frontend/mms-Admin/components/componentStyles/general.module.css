@@ -1,0 +1,163 @@
+.set_pic_text {
+  font-size: 20px;
+  line-height: 33px;
+  color: #333;
+  height: 33px;
+  width: 155px;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+.small_button {
+  width: 104px;
+  height: 24px;
+  border-radius: 5px;
+  padding: 2px 15px 2px 15px;
+  background-color: #058b94;
+  color: #f7feff;
+  box-shadow: none;
+  border: none;
+  margin-top: 0;
+}
+
+.profile_text_container {
+  margin-left: 36px;
+}
+
+.btn {
+  background-color: #058b94;
+  color: #fff;
+  height: 50px;
+  padding: 12px 40px;
+}
+
+.button_text {
+  width: 74px;
+  height: 20px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.label {
+  font-size: 16px;
+  margin-top: 5px;
+  line-height: 27px;
+  color: #333;
+  margin-right: 27.65px;
+  font-weight: 600;
+  width: 83px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 25px;
+  margin-right: 20px;
+  align-items: flex-start;
+}
+
+.sub_container {
+  width: 264px;
+  height: 73px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.input_div {
+  width: 48%;
+}
+
+.input_container {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.single_input {
+  font-size: 16px;
+  line-height: 27px;
+  color: #999;
+  font-weight: 400;
+  height: 50px;
+  flex: 1;
+}
+
+.select {
+  flex: 1;
+  width: 274px;
+}
+
+.select_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 25px;
+  margin-right: 20px;
+  align-items: flex-start;
+}
+
+.select_label {
+  font-size: 16px;
+  margin-top: 5px;
+  line-height: 27px;
+  color: #333;
+  font-weight: 600;
+  width: 83px;
+  text-align: center;
+}
+
+.col_margin {
+  margin-bottom: 0;
+}
+
+.socials_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: solid 1px #e6e6e6;
+  border-radius: 5px;
+}
+
+.social_icons {
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-right-color: #e6e6e6;
+  justify-content: space-evenly;
+  align-items: center;
+  display: flex;
+  width: 200px;
+  padding-top: 4px;
+}
+
+.input_border {
+  border: none;
+  font-size: 16px;
+  line-height: 27px;
+  color: #999;
+}
+
+.icon_text {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 27px;
+  color: #4d4d4d;
+}
+
+.btn_container {
+  display: flex;
+  width: 98%;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: 21px;
+}
+
+.profile {
+  width: 264px;
+  height: 73px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

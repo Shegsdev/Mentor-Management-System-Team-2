@@ -1,0 +1,42 @@
+@import "./variables.module.scss";
+
+.button {
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 6px 15px;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &.primary {
+    background: $theme-primary;
+    color: $theme-light;
+  }
+
+  &.default {
+    background: $theme-light;
+    color: $theme-primary;
+  }
+
+  &.medium {
+    font-weight: 500;
+    padding: 10px 35px;
+    height: 40px;
+  }
+
+  &.large {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 11px 65px;
+    height: 50px;
+  }
+}
+
+.pseudo {
+  &:active {
+    outline: 4px solid #b9dade;
+  }
+}
