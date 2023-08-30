@@ -1,0 +1,33 @@
+https://team4.d2wjcd4f6an59o.amplifyapp.com
+https://mmsadmin.samprotech.duckdns.org
+Password = Password@123
+example@gmail.com
+
+--------------------------------------------------
+
+Team 1 
+
+Username: user6@email.test
+Password: password
+
+-------------------------------------------------
+
+Team 4
+URL : https://team4.d2wjcd4f6an59o.amplifyapp.com
+
+New User:
+Login : winobe5336@camplvad.com
+Pass : hK2qJC2ZfdkU5IXt2LfS_
+
+Existing User:
+Login: rkdeploy@gmail.com
+Pass: password123
+
+---------------------------------------------------
+
+Team 3
+URL : https://alc-mms-team-3.web.app
+
+username : jasolajohn@gmail.com
+password : Test123@
+API Documentation: https://documenter.getpostman.com/view/13456367/2s93ebUBkR#0e356d93-0ddb-4a8c-b0b8-27747854fdc1

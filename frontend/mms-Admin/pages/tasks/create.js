@@ -205,7 +205,7 @@ const NewTask = () => {
       </Row>
 
       <SuccessModal
-        message="Task created successfuly"
+        message="Task created successfully"
         isModalOpen={openModal}
         image={"/assets/images/task_success.png"}
         setIsModalOpen={handleModal}
