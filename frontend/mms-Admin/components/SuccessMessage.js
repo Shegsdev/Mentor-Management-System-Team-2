@@ -1,9 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import { Button, Modal } from "antd";
+import {  Modal } from "antd";
 import styles from "./componentStyles/splashscreen.module.css";
 import { CustomButton } from "./formInputs/CustomInput";
-import { useRouter } from "next/router";
+import {Button} from "./atoms/Button"
+import Router from "next/router";
+import NoSSRWrapper from "./DisableSSR";
 
 function SuccessMessage({
   image,
@@ -12,29 +14,34 @@ function SuccessMessage({
   setIsModalOpen,
   redirectLogin,
   reloadPage,
-  success
+  success,
+  logout
 }) {
-  const router = useRouter();
-
   const handleOk = () => {
     if (redirectLogin) {
       setIsModalOpen(false);
-      router.push("/login");
+      Router.push("/login");
     } else {
       setIsModalOpen(false);
     }
 
     if (reloadPage) {
-      router.reload();
+      Router.reload();
     }
 
     if (success) {
-      router.reload();
+      Router.reload();
+    }
+
+    if(logout){
+      localStorage.clear();
+      sessionStorage.clear();
+      Router.reload()
     }
   };
 
   return (
-    <>
+    <NoSSRWrapper>
       <Modal
         className={styles.modal}
         centered
@@ -51,12 +58,12 @@ function SuccessMessage({
           <div>
             <Image src={image} width="220" height="165" />;
           </div>
-          <div>
-            <CustomButton onClick={handleOk}>Done</CustomButton>
+          <div className="bg-mms-teal text-white rounded-lg mt-4">
+            <CustomButton  onClick={handleOk}>Done</CustomButton>
           </div>
         </div>
       </Modal>
-    </>
+    </NoSSRWrapper>
   );
 }
 

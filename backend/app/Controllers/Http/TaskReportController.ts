@@ -24,7 +24,7 @@ export default class TaskReportController {
       const taskId = params.taskId
       const task = await Task.query()
         .where('id', taskId)
-        .preload('mentors')
+        .preload('mentorManagers')
         .preload('user', (query) => {
           query.select(['firstName', 'lastName'])
         })
@@ -33,7 +33,9 @@ export default class TaskReportController {
         return response.notFound({ message: 'Task not found', status: 'Error' })
       }
 
-      const isMentorManager = task.mentors.some((mentorManager) => mentorManager.id === user?.id)
+      const isMentorManager = task.mentorManagers.some(
+        (mentorManager) => mentorManager.id === user?.id
+      )
       if (!isMentorManager) {
         return response.unauthorized({ message: 'You are not authorized to perform this action' })
       }
@@ -82,7 +84,9 @@ export default class TaskReportController {
         .orderBy('created_at', 'desc')
         .if(search, (q) => {
           q.whereHas('task', (taskQuery) => {
-            taskQuery.where('title', 'like', `%${search}%`)
+            taskQuery
+              .whereRaw('LOWER(title) like ?', [`%${search.toLowerCase()}%`])
+              .orWhereRaw('LOWER(description) like ?', [`%${search.toLowerCase()}%`])
           })
         })
         .paginate(page || 1, limit || 10)
@@ -178,6 +182,7 @@ export default class TaskReportController {
 
   async downloadReportPDF({ auth, params, response }: HttpContextContract) {
     const trx = await Database.transaction()
+    const event = { name: Task }
     try {
       const user = auth.user
       if (!user || !user.isAdmin) {
@@ -197,7 +202,7 @@ export default class TaskReportController {
       const mentor = await User.findOrFail(report.mentorId)
 
       await trx.commit()
-      return generatePdfFile(response, report, task, mentor)
+      return generatePdfFile(response, report, task.title, mentor, event)
     } catch (error) {
       await trx.rollback()
       response.badRequest({ message: 'Error getting request', status: 'Error' })
@@ -224,9 +229,10 @@ export default class TaskReportController {
         })
         .firstOrFail()
       const mentor = await User.findOrFail(report.mentorId)
+      const mentorNames = {name: {name: `${mentor.firstName} ${mentor.lastName}`}}
       const writable = new stream.Duplex()
 
-      await generatePdfFile({ response: writable }, report, task, mentor)
+      await generatePdfFile(Task, { response: writable }, report, task, mentorNames)
       const readable = new stream.Readable()
       readable.pipe(writable)
 
@@ -257,8 +263,7 @@ export default class TaskReportController {
         return response.unauthorized({ error: 'You must be an admin to delete reports' })
       }
 
-      const reportId = params.reportId
-      const report = await TaskReport.findOrFail(reportId)
+      const report = await TaskReport.findOrFail(params.reportId)
 
       await report.delete()
 

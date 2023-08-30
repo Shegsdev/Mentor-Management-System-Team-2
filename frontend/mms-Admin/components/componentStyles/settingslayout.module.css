@@ -1,9 +1,10 @@
 .sub_div {
   flex-grow: 1;
-  max-width: 90%;
   padding: 2rem;
-  margin-left: 1rem;
   color: black;
   border: 1px solid #e6e6e6;
   border-radius: 5px;
+  overflow-y: scroll;
+  height: 100vh;
+  padding-bottom: 200px;
 }
