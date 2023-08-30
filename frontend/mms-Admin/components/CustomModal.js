@@ -1,16 +1,16 @@
-import { Button, Modal, Row, Col, Input, message, Upload } from "antd";
+import { Modal, Row, Col, Input, message, Upload } from "antd";
 import { useState, useEffect } from "react";
 import SuccessMessage from "./SuccessMessage";
 import {
-  CustomButton,
   CustomInput,
   CustomTextArea,
 } from "./formInputs/CustomInput";
-
+import {Button} from "./atoms/Button"
 import styles from "../styles/admin/discussionForum.module.css";
 import { Icon } from "./Icon/Icon";
 import EmojiPicker from "emoji-picker-react";
 import { createPost } from "pages/api/forum";
+import NoSSRWrapper from "./DisableSSR";
 
 export const CustomFormModal = ({
   newTopic,
@@ -28,7 +28,7 @@ export const CustomFormModal = ({
     description: "",
     emoji: "happy face",
   });
-  const [message, setMessage]= useState("")
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -55,7 +55,7 @@ export const CustomFormModal = ({
   const handleSubmit = async (event) => {
     //call api here
     event.preventDefault();
-    console.log(postData);
+
     try {
       if (!postData.title || !postData.description) {
         setConfirmLoading(false);
@@ -63,10 +63,12 @@ export const CustomFormModal = ({
       }
 
       setConfirmLoading(true);
-      setMessage("")
+      setMessage("");
 
       const formData = new FormData();
-      formData.append("imageUrl", file);
+      if (file) {
+        formData.append("imageUrl", file);
+      }
       formData.append("title", postData.title);
       formData.append("description", postData.description);
       formData.append("emoji", JSON.stringify(postData.emoji));
@@ -86,14 +88,12 @@ export const CustomFormModal = ({
         response?.status === 403
       ) {
         setConfirmLoading(false);
-        setMessage(response?.message)
+        setMessage(response?.message);
         throw response;
       }
     } catch (e) {
       setConfirmLoading(false);
-      setMessage(e.message)
-      
-
+      setMessage(e.message);
     }
   };
   const handleCancel = () => {
@@ -102,77 +102,82 @@ export const CustomFormModal = ({
 
   return (
     <>
-      <Modal
-        className={styles.modal}
-        open={newTopic}
-        onOk={handleSubmit}
-        width={866}
-        footer={
-          <CustomButton loading={confirmLoading} onClick={handleSubmit}>
-            Post to forum
-          </CustomButton>
-        }
-        confirmLoading={confirmLoading}
-        closable={false}>
-        <Row className={styles.modal_container}>
-        {message && <p>{message}</p>}
+      <NoSSRWrapper>
+        <Modal
+          className={styles.modal}
+          open={newTopic}
+          onOk={handleSubmit}
+          width={866}
+          footer={
+            <Button
+              loading={confirmLoading}
+              onClick={handleSubmit}
+              variant="normal"
+              size="large">
+              Post to forum
+            </Button>
+          }
+          confirmLoading={confirmLoading}
+          closable={false}>
+          <Row className={styles.modal_container}>
+            {message && <p>{message}</p>}
 
-          <Row className={styles.header_row}>
+            <Row className={styles.header_row}>
+              <div className={styles.topic}>New Topic</div>
+              <div style={{ cursor: "pointer" }} onClick={handleCancel}>
+                <Icon name="Close" />
+              </div>
+            </Row>
 
-            <div className={styles.topic}>New Topic</div>
-            <div style={{ cursor: "pointer" }} onClick={handleCancel}>
-              <Icon name="Close" />
-            </div>
-          </Row>
-
-          <CustomInput
-            placeholder="Enter a title"
-            className={styles.mb_title}
-            name="title"
-            value={postData.title}
-            onChange={handleChange}
-          />
-          <Row className={styles.body_row}>
-            <CustomTextArea
-              rows={6}
-              placeholder="start typing ..."
-              name="description"
-              value={postData.description}
+            <CustomInput
+              placeholder="Enter a title"
+              className={styles.mb_title}
+              name="title"
+              value={postData.title}
               onChange={handleChange}
-              className={styles.textarea}
             />
-            <Row className={styles.emojis}>
-              <Row>
-                <Col
-                  onClick={() => {
-                    showEmojis(!emojis);
-                  }}
-                  className={styles.smiley}>
-                  <Icon name="SmileyFace" />
-                </Col>
+            <Row className={styles.body_row}>
+              <CustomTextArea
+                rows={6}
+                placeholder="start typing ..."
+                name="description"
+                value={postData.description}
+                onChange={handleChange}
+                className={styles.textarea}
+              />
+              <Row className={styles.emojis}>
+                <Row>
+                  <Col
+                    onClick={() => {
+                      showEmojis(!emojis);
+                    }}
+                    className={styles.smiley}>
+                    <Icon name="SmileyFace" />
+                  </Col>
 
-                <Upload  {...props} >
-                  <Icon name="Pin" color="#058B94" />
-                </Upload>
+                  <Upload {...props}>
+                    <Icon name="Pin" color="#058B94" />
+                  </Upload>
+                </Row>
+              </Row>
+              <Row className={styles.emojis_container}>
+                {emojis && (
+                  <EmojiPicker
+                    onEmojiClick={(emoji, e) => {
+                      setPostData((prevState) => ({
+                        ...prevState,
+                        description: prevState.description + emoji.emoji,
+                      }));
+                    }}
+                    skinTonesDisabled={true}
+                    width={"100%"}
+                  />
+                )}
               </Row>
             </Row>
-            <Row className={styles.emojis_container}>
-              {emojis && (
-                <EmojiPicker
-                  onEmojiClick={(emoji, e) => {
-                    setPostData((prevState) => ({
-                      ...prevState,
-                      description: prevState.description + emoji.emoji,
-                    }));
-                  }}
-                  skinTonesDisabled={true}
-                  width={"100%"}
-                />
-              )}
-            </Row>
           </Row>
-        </Row>
-      </Modal>
+        </Modal>
+      </NoSSRWrapper>
     </>
   );
 };

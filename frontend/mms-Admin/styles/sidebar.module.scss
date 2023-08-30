@@ -2,6 +2,8 @@
 
 .sidebar_layout {
   background: $theme-light;
+  max-height: calc(100vh - 90px);
+  overflow-y: auto;
 }
 
 .welcome_text_header {
@@ -17,9 +19,9 @@
 
 .sidebar_menu {
   background: none;
-  border: none;
-  height: 80vh;
+  border: 0 !important;
   padding-top: 30px;
+  overflow-y: auto;
 
   .item {
     display: flex;

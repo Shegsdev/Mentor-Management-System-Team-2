@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { Button, Input } from "antd";
+import { Input } from "antd";
 import styles from "./componentStyles/passwordreset.module.css";
 import SuccessMessage from "./SuccessMessage";
 import { validateInputs } from "utils/validateInputs";
 import { passwordForgot } from "utils/http";
 import { useRouter } from "next/router";
+import { Button } from "./atoms/Button";
 
 function ForgetPassword({ setForgetPassword, forgetPassword }) {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const handleChange = (e) => {
     e.preventDefault();
@@ -16,20 +18,29 @@ function ForgetPassword({ setForgetPassword, forgetPassword }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const valid = validateInputs({ email });
+    if (!email) {
+      return;
+    }
     if (valid) {
       try {
+        setLoading(true);
+
         const response = await passwordForgot({ email });
         if (response.status === 200) {
           setForgetPassword(!forgetPassword);
+          setLoading(false);
           router.push("/reset-password");
         }
 
         if (response.status === 401 || response.status === 400) {
+          setLoading(false);
+
           throw response;
         }
-      } catch (e) {}
+      } catch (e) {
+        setLoading(false);
+      }
     }
   };
 
@@ -37,21 +48,23 @@ function ForgetPassword({ setForgetPassword, forgetPassword }) {
     <div className={styles.container}>
       <p className={styles.forgot_password_text}>Forgot Password?</p>
       <p className={styles.email_confirmation_text}>
-        An email has been sent to your registered email. <br />
-        Follow the link to reset your password.
+        Please enter your registered email to reset your password.
       </p>
-
       <Input
         size="large"
-        className={styles.login_input}
+        className={styles.input}
         name="email"
         placeholder="Email"
         required
         value={email}
         onChange={handleChange}
       />
-
-      <Button onClick={handleSubmit} className={styles.button}>
+      <Button
+        variant="normal"
+        size="large"
+        loading={loading}
+        onClick={handleSubmit}
+        className={styles.button}>
         Done
       </Button>
     </div>

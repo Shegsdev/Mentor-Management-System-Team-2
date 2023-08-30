@@ -4,6 +4,7 @@ import Roles from 'App/Enums/Roles'
 import TaskMentor from 'App/Models/TaskMentor'
 import TaskMentorManager from 'App/Models/TaskMentorManager'
 import Database from '@ioc:Adonis/Lucid/Database'
+import { schema } from '@ioc:Adonis/Core/Validator'
 
 export default class TaskController {
   async create({ auth, request, response }: HttpContextContract) {
@@ -13,54 +14,49 @@ export default class TaskController {
       return response.unauthorized({ message: 'You are not authorized to perform this action' })
     }
 
-    const { title, description, meta, startDate, endDate, typeOfReport, mentors, mentorManagers } =
-      request.only([
-        'title',
-        'description',
-        'meta',
-        'startDate',
-        'endDate',
-        'typeOfReport',
-        'mentors',
-        'mentorManagers',
-      ])
+    const payload = await request.validate({
+      schema: schema.create({
+        title: schema.string(),
+        description: schema.string(),
+        meta: schema.string.optional(),
+        startDate: schema.date(),
+        endDate: schema.date(),
+        typeOfReport: schema.string.optional(),
+        mentors: schema.array.optional().members(schema.number()),
+        mentorManagers: schema.array.optional().members(schema.number()),
+      }),
+    })
 
     try {
       const task = await Database.transaction(async (trx) => {
         const task = new Task()
 
         task.fill({
-          title,
-          description,
-          meta,
+          ...payload,
           userId: adminUser.id,
-          startDate,
-          endDate,
-          typeOfReport,
         })
 
         await task.useTransaction(trx).save()
 
-        if (mentors && mentors.length > 0) {
-          for (const mentorId of mentors) {
+        if (payload.mentors && payload.mentors.length > 0) {
+          for (const mentorId of payload.mentors) {
             const taskMentor = new TaskMentor()
 
             taskMentor.fill({
               taskId: task.id,
-              mentorId,
+              mentorId: Number(mentorId),
             })
-
             await taskMentor.useTransaction(trx).save()
           }
         }
 
-        if (mentorManagers && mentorManagers.length > 0) {
-          for (const mentorManagerId of mentorManagers) {
+        if (payload.mentorManagers && payload.mentorManagers.length > 0) {
+          for (const mentorManagerId of payload.mentorManagers) {
             const taskMentorManager = new TaskMentorManager()
 
             taskMentorManager.fill({
               taskId: task.id,
-              mentorManagerId,
+              mentorManagerId: Number(mentorManagerId),
             })
 
             await taskMentorManager.useTransaction(trx).save()
@@ -72,7 +68,7 @@ export default class TaskController {
 
       return response.created({ status: 'success', message: 'Task Created', task })
     } catch (error) {
-      return response.status(500).send({ message: 'Error creating task.' })
+      return response.status(500).send({ message: 'Error creating task.', error })
     }
   }
 
@@ -82,7 +78,6 @@ export default class TaskController {
     if (!adminUser || adminUser.roleId !== Roles.ADMIN) {
       return response.unauthorized({ message: 'You are not authorized to perform this action' })
     }
-
     const { title, description, meta, startDate, endDate, typeOfReport, mentors, mentorManagers } =
       request.only([
         'title',
@@ -142,7 +137,7 @@ export default class TaskController {
         .json({ status: 'success', message: 'Task Updated Successfully', task })
     } catch (error) {
       console.log(error)
-      return response.status(500).send({ message: 'Error updating task.' })
+      return response.status(500).send({ message: 'Error updating task.', error })
     }
   }
 
@@ -159,6 +154,7 @@ export default class TaskController {
       .where('id', taskId)
       .preload('mentors')
       .preload('mentorManagers')
+      .preload('taskReports')
       .preload('user', (query) => {
         query.select(['firstName', 'lastName'])
       })
@@ -190,6 +186,14 @@ export default class TaskController {
         firstName: mentorManager.firstName,
         lastName: mentorManager.lastName,
       })),
+      reports: task.taskReports?.map((report) => ({
+        id: report.id,
+        achievement: report.achievement,
+        blocker: report.blocker,
+        recommendation: report.recommendation,
+        createdAt: report.createdAt,
+        updatedAt: report.updatedAt,
+      })),
       mentorCount: task.mentors.length,
       mentorManagerCount: task.mentorManagers.length,
     }
@@ -203,10 +207,17 @@ export default class TaskController {
       return response.unauthorized({ message: 'You are not authorized to perform this action' })
     }
 
-    const { page, limit } = request.qs()
+    const { page, limit, search } = request.qs()
 
     try {
       const tasks = await Task.query()
+        .where((query) => {
+          if (search) {
+            query
+              .whereRaw('LOWER(title) LIKE ?', [`%${search.toLowerCase()}%`])
+              .orWhereRaw('LOWER(description) LIKE ?', [`%${search.toLowerCase()}%`])
+          }
+        })
         .preload('user')
         .preload('mentors')
         .preload('mentorManagers')
@@ -288,5 +299,95 @@ export default class TaskController {
     } catch (error) {
       return response.status(500).send({ message: 'Error deleting task' })
     }
+  }
+
+  async getMentorsByTask({ params, response }: HttpContextContract) {
+    const { taskId } = params
+
+    try {
+      const task = await Task.query().where('id', taskId).preload('mentors').first()
+
+      if (!task) {
+        return response.notFound({ message: 'Task not found' })
+      }
+
+      const mentors = task.mentors.map((mentor) => ({
+        mentor,
+      }))
+
+      return response.ok({
+        status: 'success',
+        message: 'Mentors fetched successfully',
+        data: mentors,
+      })
+    } catch (error) {
+      return response.status(500).send({ message: 'Error retrieving mentors.' })
+    }
+  }
+
+  async getMentorManagersByTask({ params, response }: HttpContextContract) {
+    const { taskId } = params
+
+    try {
+      const task = await Task.query().where('id', taskId).preload('mentorManagers').first()
+
+      if (!task) {
+        return response.notFound({ message: 'Task not found' })
+      }
+
+      const mentorManagers = task.mentorManagers.map((mentorManager) => ({
+        mentorManager,
+      }))
+
+      return response.ok({
+        status: 'success',
+        message: 'Mentor Managers fetched successfully',
+        data: mentorManagers,
+      })
+    } catch (error) {
+      return response.status(500).send({ message: 'Error retrieving mentor managers.' })
+    }
+  }
+
+  public async getReportsByTask({ params, response }: HttpContextContract) {
+    const { taskId } = params
+
+    try {
+      const task = await Task.query().where('id', taskId).preload('taskReports').first()
+
+      if (!task) {
+        return response.notFound({ message: 'Task not found' })
+      }
+
+      const reports = task.taskReports.map((report) => ({
+        id: report.id,
+        taskId: report.taskId,
+        mentorId: report.mentorId,
+        achievement: report.achievement,
+        blocker: report.blocker,
+        recommendation: report.recommendation,
+        createdAt: report.createdAt,
+        updatedAt: report.updatedAt,
+      }))
+
+      return response.ok({
+        status: 'success',
+        message: 'Reports fetched successfully',
+        data: reports,
+      })
+    } catch (error) {
+      return response.status(500).send({ message: 'Error retrieving reports.' })
+    }
+  }
+
+  async searchTask({ request, response }: HttpContextContract) {
+    const query = request.input('search')
+
+    const res = await Task.query()
+      .whereLike('title', `%${query.replaceAll("'", '')}%`)
+      .orWhereLike('description', `%${query.replaceAll("'", '')}%`)
+      .select('*')
+
+    return response.ok(res)
   }
 }

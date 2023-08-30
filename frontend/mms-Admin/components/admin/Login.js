@@ -9,6 +9,7 @@ import { postLogin } from "utils/http";
 import { useRouter } from "next/router";
 import { validateInputs } from "../../utils/validateInputs";
 import { useLogin } from "../../hooks/useLogin";
+import { Button as CustomButton } from "../../components/atoms/Button";
 
 const Login = ({ showPassword, setShowPassword }) => {
   const [loading, setLoading] = useState(false);
@@ -16,10 +17,7 @@ const Login = ({ showPassword, setShowPassword }) => {
     email: "",
     password: "",
   });
-  const { setToken, token } = useLogin();
-   
-
-
+  const { setToken, token, setUser } = useLogin();
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const router = useRouter();
@@ -38,20 +36,34 @@ const Login = ({ showPassword, setShowPassword }) => {
     setLoading(true);
 
     const valid = validateInputs(loginData);
+    if (!valid) {
+      setLoading(false);
+
+      setMessage("invalid email/password");
+    }
     if (valid) {
       try {
         const response = await postLogin(loginData);
 
-        if (response.status === 200) {
+        if (response?.status === 200) {
           setToken(response.data.token.token);
-          router.push("/profile");
+          setUser(response.data);
+          setMessage("Logged In Successfully");
+
+          router.push("/");
         }
 
-        if (response.status === 401 || response.status === 400) {
-          setMessage(response.message);
+        if (response?.status === 401 || response?.status === 400) {
+          setMessage(response?.message);
+          setLoading(false);
         }
         setLoading(false);
-      } catch (e) {}
+      } catch (e) {
+        console.log(e);
+        // setMessage(e.message);
+        setMessage("Network Error");
+        setLoading(false);
+      }
     }
   };
 
@@ -89,13 +101,21 @@ const Login = ({ showPassword, setShowPassword }) => {
           onChange={handleOnchange}
         />
         <div className={styles.login_button_container}>
-          <Button
+          {/* <Button
             onClick={handleSubmit}
             className={styles.login_button}
             loading={loading}>
             Login
-          </Button>
+          </Button> */}
+          <CustomButton
+            className="w-[90%]"
+            onClick={handleSubmit}
+            variant="normal"
+            size="large">
+            Login
+          </CustomButton>
         </div>
+
         <p
           className={styles.forgot_password_text}
           onClick={handleForgotPassword}>
@@ -120,4 +140,4 @@ const Login = ({ showPassword, setShowPassword }) => {
     </div>
   );
 };
-export default Login;
+export default Login;
